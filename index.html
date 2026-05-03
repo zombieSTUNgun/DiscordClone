@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GameList Board</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <h1>GameList</h1>
+      <p>Craigslist-style gaming classifieds + message board</p>
+    </header>
+
+    <main class="layout">
+      <aside class="panel">
+        <h2>Create Post</h2>
+        <form id="postForm">
+          <label>Title <input required id="title" maxlength="80" /></label>
+          <label>Category
+            <select id="category" required>
+              <option value="LFG">LFG</option>
+              <option value="Trades">Trades</option>
+              <option value="Guilds">Guilds</option>
+              <option value="Esports">Esports</option>
+              <option value="Hardware">Hardware</option>
+              <option value="General">General</option>
+            </select>
+          </label>
+          <label>Game <input id="game" required maxlength="40" placeholder="e.g. Valorant" /></label>
+          <label>Region <input id="region" required maxlength="40" placeholder="NA West" /></label>
+          <label>Details
+            <textarea id="details" required maxlength="400" rows="5"></textarea>
+          </label>
+          <button type="submit">Post Listing</button>
+        </form>
+      </aside>
+
+      <section class="panel board">
+        <div class="boardHeader">
+          <h2>Listings</h2>
+          <input id="search" placeholder="Search title / game / region" />
+        </div>
+        <div class="chips" id="filters"></div>
+        <ul id="posts"></ul>
+      </section>
+    </main>
+
+    <template id="postTemplate">
+      <li class="post">
+        <div class="meta">
+          <span class="chip category"></span>
+          <span class="chip game"></span>
+          <span class="time"></span>
+        </div>
+        <h3></h3>
+        <p class="region"></p>
+        <p class="details"></p>
+      </li>
+    </template>
+
+    <script src="script.js"></script>
+  </body>
+</html>
