@@ -1,89 +1,136 @@
 :root {
-  --bg: #0b1220;
-  --panel: #121c30;
-  --text: #e7edf7;
-  --muted: #9fb2cf;
-  --accent: #53b2ff;
-  --chip: #1b2a46;
+  --orange: #ff6600;
+  --bg: #f6f6ef;
+  --text: #1f1f1f;
+  --muted: #6c6c6c;
 }
 
 * { box-sizing: border-box; }
 body {
   margin: 0;
-  font-family: Inter, system-ui, sans-serif;
+  font-family: Verdana, Geneva, sans-serif;
+  background: var(--bg);
   color: var(--text);
-  background: linear-gradient(180deg, #050913, #0e1728);
 }
 
 .topbar {
-  padding: 1rem 1.25rem;
-  border-bottom: 1px solid #223558;
-  background: #0b1424;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: var(--orange);
+  padding: 0.4rem 0.8rem;
 }
-.topbar h1 { margin: 0; }
-.topbar p { margin: .35rem 0 0; color: var(--muted); }
 
-.layout {
+.brand {
+  width: 22px;
+  height: 22px;
+  border: 1px solid #fff;
+  color: #fff;
   display: grid;
-  grid-template-columns: 320px 1fr;
-  gap: 1rem;
-  padding: 1rem;
-}
-.panel {
-  background: var(--panel);
-  border: 1px solid #24395e;
-  border-radius: 12px;
-  padding: 1rem;
-}
-label { display: block; margin-bottom: .75rem; font-size: .92rem; color: var(--muted); }
-input, select, textarea, button {
-  width: 100%;
-  margin-top: .35rem;
-  padding: .6rem .7rem;
-  border-radius: 8px;
-  border: 1px solid #2f4b77;
-  background: #0d1930;
-  color: var(--text);
-}
-button {
-  background: var(--accent);
-  color: #071322;
+  place-items: center;
   font-weight: 700;
+}
+
+.topbar h1 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+nav { display: flex; gap: 0.4rem; }
+.tab {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+.tab.active { font-weight: 700; text-decoration: underline; }
+
+.container {
+  max-width: 1050px;
+  margin: 0 auto;
+  padding: 0.8rem;
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 0.8rem;
+}
+
+.composer,
+.board {
+  background: #fff;
+  border: 1px solid #ddd;
+  padding: 0.8rem;
+}
+
+label { display: block; font-size: 0.78rem; margin-bottom: 0.5rem; }
+input, textarea, button {
+  font: inherit;
+}
+input, textarea {
+  width: 100%;
+  margin-top: 0.25rem;
+  padding: 0.4rem;
+  border: 1px solid #ccc;
+}
+
+.composer button[type='submit'] {
+  margin-top: 0.3rem;
+  background: var(--orange);
+  border: none;
+  padding: 0.4rem 0.6rem;
   cursor: pointer;
 }
 
-.boardHeader {
+.board-head {
   display: flex;
-  gap: .75rem;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
+  gap: 0.6rem;
 }
-.boardHeader input { max-width: 340px; }
 
-.chips { display: flex; flex-wrap: wrap; gap: .5rem; margin: .75rem 0; }
-.chip {
-  display: inline-block;
-  padding: .2rem .6rem;
-  border-radius: 999px;
-  background: var(--chip);
-  border: 1px solid #2d456f;
-  font-size: .8rem;
+#posts {
+  margin: 0.8rem 0 0;
+  padding-left: 1.6rem;
 }
-.filter { cursor: pointer; }
-.filter.active { background: var(--accent); color: #0b1731; }
-
-#posts { list-style: none; padding: 0; margin: 0; display: grid; gap: .7rem; }
-.post {
-  border: 1px solid #2f4a74;
-  border-radius: 10px;
-  padding: .8rem;
-  background: #0d1930;
+.item {
+  display: grid;
+  grid-template-columns: 20px 1fr;
+  gap: 0.5rem;
+  margin-bottom: 0.8rem;
 }
-.post h3 { margin: .45rem 0; }
-.post .region { margin: 0; color: #b5c4df; font-size: .9rem; }
-.post .details { margin: .55rem 0 0; color: #d2ddf1; }
-.time { color: #8ca2c5; font-size: .82rem; }
+.vote {
+  border: none;
+  background: transparent;
+  color: #999;
+  cursor: pointer;
+  padding: 0;
+}
+.vote:hover { color: var(--orange); }
 
-@media (max-width: 840px) {
-  .layout { grid-template-columns: 1fr; }
+.title-row { display: flex; gap: 0.4rem; align-items: baseline; flex-wrap: wrap; }
+.title {
+  color: #000;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+.host, .meta, .toggle-comments, .text { font-size: 0.72rem; color: var(--muted); }
+.meta, .text { margin: 0.2rem 0; }
+.text { color: #333; }
+.toggle-comments {
+  border: none;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+}
+.comments { margin-top: 0.35rem; padding-left: 0.75rem; border-left: 2px solid #eee; }
+.comment { font-size: 0.72rem; margin: 0.2rem 0; color: #444; }
+.comment-form {
+  display: flex;
+  gap: 0.35rem;
+  margin-top: 0.35rem;
+}
+.comment-form button { padding: 0.25rem 0.45rem; border: 1px solid #bbb; background: #f4f4f4; }
+.hidden { display: none; }
+
+@media (max-width: 860px) {
+  .container { grid-template-columns: 1fr; }
 }

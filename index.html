@@ -3,59 +3,58 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>GameList Board</title>
+    <title>GameNews.YC</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
     <header class="topbar">
-      <h1>GameList</h1>
-      <p>Craigslist-style gaming classifieds + message board</p>
+      <div class="brand">Y</div>
+      <h1>GameNews</h1>
+      <nav>
+        <button class="tab active" data-tab="top">top</button>
+        <button class="tab" data-tab="new">new</button>
+        <button class="tab" data-tab="ask">ask</button>
+      </nav>
     </header>
 
-    <main class="layout">
-      <aside class="panel">
-        <h2>Create Post</h2>
+    <main class="container">
+      <section class="composer">
+        <h2>Submit</h2>
         <form id="postForm">
-          <label>Title <input required id="title" maxlength="80" /></label>
-          <label>Category
-            <select id="category" required>
-              <option value="LFG">LFG</option>
-              <option value="Trades">Trades</option>
-              <option value="Guilds">Guilds</option>
-              <option value="Esports">Esports</option>
-              <option value="Hardware">Hardware</option>
-              <option value="General">General</option>
-            </select>
-          </label>
-          <label>Game <input id="game" required maxlength="40" placeholder="e.g. Valorant" /></label>
-          <label>Region <input id="region" required maxlength="40" placeholder="NA West" /></label>
-          <label>Details
-            <textarea id="details" required maxlength="400" rows="5"></textarea>
-          </label>
-          <button type="submit">Post Listing</button>
+          <label>Title <input id="title" required maxlength="90" /></label>
+          <label>Game <input id="game" required maxlength="40" placeholder="e.g. Elden Ring" /></label>
+          <label>Link <input id="url" type="url" placeholder="https://..." /></label>
+          <label>Text (optional) <textarea id="text" rows="4" maxlength="500"></textarea></label>
+          <button type="submit">submit</button>
         </form>
-      </aside>
+      </section>
 
-      <section class="panel board">
-        <div class="boardHeader">
-          <h2>Listings</h2>
-          <input id="search" placeholder="Search title / game / region" />
+      <section class="board">
+        <div class="board-head">
+          <input id="search" placeholder="search title, game, or text" />
+          <span id="count"></span>
         </div>
-        <div class="chips" id="filters"></div>
-        <ul id="posts"></ul>
+        <ol id="posts"></ol>
       </section>
     </main>
 
     <template id="postTemplate">
-      <li class="post">
-        <div class="meta">
-          <span class="chip category"></span>
-          <span class="chip game"></span>
-          <span class="time"></span>
+      <li class="item">
+        <button class="vote" title="upvote">▲</button>
+        <div class="post-body">
+          <div class="title-row">
+            <a class="title" target="_blank" rel="noreferrer"></a>
+            <span class="host"></span>
+          </div>
+          <p class="meta"></p>
+          <p class="text"></p>
+          <button class="toggle-comments" type="button"></button>
+          <div class="comments hidden"></div>
+          <form class="comment-form hidden">
+            <input class="comment-input" maxlength="140" placeholder="add comment" required />
+            <button type="submit">reply</button>
+          </form>
         </div>
-        <h3></h3>
-        <p class="region"></p>
-        <p class="details"></p>
       </li>
     </template>
 
