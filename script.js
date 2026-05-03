@@ -1,11 +1,4 @@
-const seedPosts = [
-  { title: 'LF2 for ranked push', category: 'LFG', game: 'Apex Legends', region: 'NA East', details: 'Need chill comms, diamond+', createdAt: Date.now() - 1000 * 60 * 38 },
-  { title: 'Selling mechanical keyboard', category: 'Hardware', game: 'PC Setup', region: 'US Shipping', details: 'Hot-swappable, barely used. Looking for $70.', createdAt: Date.now() - 1000 * 60 * 120 },
-  { title: 'New Guild recruiting healers', category: 'Guilds', game: 'World of Warcraft', region: 'NA', details: 'Weekend raids, casual and friendly.', createdAt: Date.now() - 1000 * 60 * 360 },
-];
-
 const categories = ['All', 'LFG', 'Trades', 'Guilds', 'Esports', 'Hardware', 'General'];
-let posts = JSON.parse(localStorage.getItem('gamelist.posts') || 'null') || seedPosts;
 let activeFilter = 'All';
 
 const postsEl = document.getElementById('posts');
@@ -38,17 +31,11 @@ function renderFilters() {
   });
 }
 
-function matches(post, q) {
-  const text = `${post.title} ${post.game} ${post.region} ${post.details}`.toLowerCase();
-  return text.includes(q.toLowerCase());
-}
-
-function renderPosts() {
+async function renderPosts() {
   const q = searchEl.value.trim();
-  const visible = posts
-    .filter((p) => activeFilter === 'All' || p.category === activeFilter)
-    .filter((p) => !q || matches(p, q))
-    .sort((a, b) => b.createdAt - a.createdAt);
+  const params = new URLSearchParams({ q, category: activeFilter });
+  const resp = await fetch(`/api/posts?${params.toString()}`);
+  const visible = await resp.json();
 
   postsEl.innerHTML = '';
   if (!visible.length) {
@@ -68,7 +55,7 @@ function renderPosts() {
   });
 }
 
-formEl.addEventListener('submit', (e) => {
+formEl.addEventListener('submit', async (e) => {
   e.preventDefault();
   const post = {
     title: document.getElementById('title').value.trim(),
@@ -76,11 +63,20 @@ formEl.addEventListener('submit', (e) => {
     game: document.getElementById('game').value.trim(),
     region: document.getElementById('region').value.trim(),
     details: document.getElementById('details').value.trim(),
-    createdAt: Date.now(),
   };
 
-  posts.push(post);
-  localStorage.setItem('gamelist.posts', JSON.stringify(posts));
+  const resp = await fetch('/api/posts', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(post),
+  });
+
+  if (!resp.ok) {
+    const err = await resp.json();
+    alert(err.error || 'Failed to post');
+    return;
+  }
+
   formEl.reset();
   renderPosts();
 });
